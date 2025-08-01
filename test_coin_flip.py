@@ -36,6 +36,25 @@ class TestCoinFlip(unittest.TestCase):
         self.assertGreater(heads_percentage, 40)
         self.assertGreater(tails_percentage, 40)
     
+    def test_calculate_statistics(self):
+        """Test that calculate_statistics returns correct values"""
+        # Test with 60 heads, 40 tails, 100 flips
+        stats = coin_flip.calculate_statistics(60, 40, 100)
+        
+        self.assertEqual(stats['heads_percentage'], 60.0)
+        self.assertEqual(stats['tails_percentage'], 40.0)
+        self.assertEqual(stats['heads_diff'], 10.0)
+        self.assertEqual(stats['tails_diff'], -10.0)
+        
+        # Standard deviation for 100 flips should be 5.0
+        self.assertAlmostEqual(stats['std_dev'], 5.0, places=1)
+        
+        # Z-score should be 2.0 (10 / 5)
+        self.assertAlmostEqual(stats['z_score'], 2.0, places=1)
+        
+        # With z-score of 2.0, significance should be "unusual - might indicate bias"
+        self.assertEqual(stats['significance'], "unusual - might indicate bias")
+    
     def test_main_runs_without_error(self):
         """Test that the main function runs without errors"""
         try:
