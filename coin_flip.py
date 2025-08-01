@@ -67,12 +67,18 @@ def main():
     print(f"Coin Flip Results ({num_flips} flips):")
     print("-" * 40)
     
-    # Create simple bar graph
+    # Create colorful bar graph with RGB colors
     max_count = max(heads_count, tails_count)
     scale_factor = 30 / max_count  # Scale to 30 characters max
     
-    heads_bar = "█" * int(heads_count * scale_factor)
-    tails_bar = "█" * int(tails_count * scale_factor)
+    # ANSI color codes for RGB colors
+    RED = '\033[91m'      # Bright red for heads
+    BLUE = '\033[94m'     # Bright blue for tails
+    GREEN = '\033[92m'    # Bright green (could be used for ties)
+    RESET = '\033[0m'     # Reset to default color
+    
+    heads_bar = RED + "█" * int(heads_count * scale_factor) + RESET
+    tails_bar = BLUE + "█" * int(tails_count * scale_factor) + RESET
     
     print(f"Heads: {heads_count} ({stats['heads_percentage']:.1f}%)")
     print(f"       {heads_bar}")
@@ -89,13 +95,13 @@ def main():
     print(f"  Z-score: {stats['z_score']:.2f}")
     print(f"  Result: {stats['significance']}")
     
-    # Determine which side won
+    # Determine which side won with colorful output
     if heads_count > tails_count:
-        print(f"\nHeads wins by {heads_count - tails_count} flips!")
+        print(f"\n{RED}🎉 Heads wins by {heads_count - tails_count} flips! 🎉{RESET}")
     elif tails_count > heads_count:
-        print(f"\nTails wins by {tails_count - heads_count} flips!")
+        print(f"\n{BLUE}🎉 Tails wins by {tails_count - heads_count} flips! 🎉{RESET}")
     else:
-        print(f"\nIt's a tie!")
+        print(f"\n{GREEN}🤝 It's a tie! 🤝{RESET}")
 
 if __name__ == "__main__":
     main()
