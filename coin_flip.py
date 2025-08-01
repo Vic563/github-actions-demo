@@ -66,8 +66,18 @@ def main():
     # Display results
     print(f"Coin Flip Results ({num_flips} flips):")
     print("-" * 40)
+    
+    # Create simple bar graph
+    max_count = max(heads_count, tails_count)
+    scale_factor = 30 / max_count  # Scale to 30 characters max
+    
+    heads_bar = "█" * int(heads_count * scale_factor)
+    tails_bar = "█" * int(tails_count * scale_factor)
+    
     print(f"Heads: {heads_count} ({stats['heads_percentage']:.1f}%)")
+    print(f"       {heads_bar}")
     print(f"Tails: {tails_count} ({stats['tails_percentage']:.1f}%)")
+    print(f"       {tails_bar}")
     print()
     
     # Display advanced statistics
